@@ -1,11 +1,37 @@
 class TweeetsController < ApplicationController
   before_action :set_tweeet, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [ :index, :show ]
+
 
   # GET /tweeets or /tweeets.json
   def index
-    @tweeets = Tweeet.all.order(created_at: :desc)
+    @tweeets = Tweeet.all
+    if user_signed_in?
+      # Obtener los IDs de los usuarios que el usuario actual sigue
+      followed_user_ids = current_user.followed_users.pluck(:id)
+
+      # Obtener los tweets de los usuarios que sigue el usuario actual, incluyendo los suyos
+
+      @tweeets = Tweeet.left_joins(:retweets).where(retweets: { user_id: followed_user_ids + [ current_user.id ] }).or(Tweeet.where(user_id: followed_user_ids + [ current_user.id ])).distinct.order(created_at: :desc)
+
+      # Obtener una lista de usuarios sugeridos para seguir
+      @users_to_follow = User.where.not(id: followed_user_ids + [ current_user.id ]).limit(5)
+    else
+      # Si el usuario no está autenticado, no mostrar ningún tweet ni sugerencias
+      @tweeets = Tweeet.none
+      @users_to_follow = User.none
+    end
     @tweeet = Tweeet.new
   end
+
+  def following
+    @following = current_user.followed_users
+  end
+
+  def followers
+    @followers = current_user.followers
+  end
+
 
   # GET /tweeets/1 or /tweeets/1.json
   def show
@@ -13,7 +39,7 @@ class TweeetsController < ApplicationController
 
   # GET /tweeets/new
   def new
-    @tweeet = Tweeet.new
+    @tweeet = current_user.tweeets.build
   end
 
   # GET /tweeets/1/edit
@@ -22,7 +48,7 @@ class TweeetsController < ApplicationController
 
   # POST /tweeets or /tweeets.json
   def create
-    @tweeet = Tweeet.new(tweeet_params)
+    @tweeet = current_user.tweeets.build(tweeet_params)
 
     respond_to do |format|
       if @tweeet.save
@@ -66,6 +92,6 @@ class TweeetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweeet_params
-      params.require(:tweeet).permit(:tweeet)
+      params.require(:tweeet).permit(:tweeet, :image)
     end
 end

@@ -1,10 +1,32 @@
 <%= simple_form_for(@tweeet) do |f| %>
-<%= f.error_notification %>
-<div class="field">
-  <div class="control">
-    <%= f.input :tweeet, label: "Tweeet about it", input_html: {class: "textarea "}, wrapper: false, 
-    label_html: {class: "label"}, placeholder: "Compose a new tweeet..." %>
+  <%= f.error_notification %>
+
+  <!-- Campo para escribir el contenido del tweet -->
+  <div class="field">
+    <div class="control">
+      <%= f.input :tweeet, label: "Deja que tu eco resuene...", 
+                   input_html: { class: "textarea" }, 
+                   wrapper: false, 
+                   label_html: { class: "label" }, 
+                   placeholder: "Crea un nuevo eco...", 
+                   autofocus: true %>
+    </div>
   </div>
-</div>
-<%= f.button :submit, class: "button is-info" %>
+
+  <!-- Campo para adjuntar la imagen -->
+  <div class="field image-upload-container">
+    <label class="label">Agregar una Imagen</label>
+    <%= f.input :image, as: :file, input_html: { id: "tweeet_image", class: "file-input", style: "display: none;" } %>
+    <button type="button" class="button is-info image-upload-button" onclick="document.getElementById('tweeet_image').click();">
+      Cargar imagen
+    </button>
+    <span id="file-feedback" class="file-feedback" >No file chosen</span>
+  </div>
+
+  <!-- Botón para enviar el tweet -->
+  <div class="field">
+    <%= f.button :submit, "Crear Eco", class: "button is-info" %>
+  </div>
 <% end %>
+
+

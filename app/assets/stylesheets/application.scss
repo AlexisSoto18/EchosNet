@@ -16,7 +16,7 @@
 @use "bulma";
 
 .navbar-brand .title {
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 // round images
@@ -31,3 +31,15 @@
 .notification:not(:last-child){
     margin-bottom: 0;
 }
+
+.notification.is-primary{
+    background-color: #00d1b2;
+    color: white;
+}   
+
+
+
+.file-feedback {
+    font-weight: bold;
+    margin-left: 10px; /* Espacio entre el botón y el feedback */
+  }

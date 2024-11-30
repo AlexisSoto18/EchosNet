@@ -34,10 +34,18 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem 'bulma-rails', '~> 1.0', '>= 1.0.2'
-gem 'simple_form', '~> 5.3', '>= 5.3.1'
-gem 'gravatar_image_tag', '~> 1.2'
-gem 'devise', '~> 4.9', '>= 4.9.4'
+gem "bulma-rails", "~> 1.0", ">= 1.0.2"
+gem "simple_form", "~> 5.3", ">= 5.3.1"
+gem "gravatar_image_tag", "~> 1.2"
+gem "devise", "~> 4.9", ">= 4.9.4"
+gem "rails-erd"
+
+# Mis gemas
+gem "prawn"
+
+
+
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -53,15 +61,15 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'better_errors', '~> 2.10', '>= 2.10.1'
+  gem "better_errors", "~> 2.10", ">= 2.10.1"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'guard', '~> 2.19'
-  gem 'guard-livereload', '~> 2.5', '>= 2.5.2', require: false
+  gem "guard", "~> 2.19"
+  gem "guard-livereload", "~> 2.5", ">= 2.5.2", require: false
 end
 
 gem "dartsass-rails", "~> 0.5.1"

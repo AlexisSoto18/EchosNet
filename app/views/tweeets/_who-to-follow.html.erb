@@ -1,53 +1,50 @@
 <div class="column">
-    <nav class="panel">
-       <p class="panel-heading">Who to Follow</p>
-    <div class="panel-block">
-        <article class="media">
+  <nav class="panel">
+    <p class="panel-heading">Sugerencias para ti</p>
+
+    <% if @users_to_follow.present? %>
+      <% @users_to_follow.each do |user| %>
+        <div class="panel-block">
+          <article class="media">
             <div class="media-left">
-                <figure class="image is-32x32">
-                    <img src="https://bulma.io/assets/images/placeholders/64x64.png">
-                </figure>
+              <figure class="image is-32x32">
+                <!-- Imagen de marcador de posición fija -->
+                <img src="https://bulma.io/assets/images/placeholders/64x64.png" alt="<%= user.username %>">
+              </figure>
             </div>
             <div class="media-content">
-                <div class="content">
-                    <p>
-                        <strong>John Smith</strong>
-                        <small>@johnsmith</small>
-                    </p>
-                </div>
-        </article>
-    </div>
-    <div class="panel-block">
-        <article class="media">
-            <div class="media-left">
-                <figure class="image is-32x32">
-                    <img src="https://bulma.io/assets/images/placeholders/64x64.png">
-                </figure>
+              <div class="content">
+                <p>
+                  <strong><%= user.name %></strong>
+                  <small>@<%= user.username %></small>
+                </p>
+              </div>
             </div>
-            <div class="media-content">
-                <div class="content">
-                    <p>
-                        <strong>John Smith</strong>
-                        <small>@johnsmith</small>
-                    </p>
-                </div>
-        </article>
-    </div>
-    <div class="panel-block">
-        <article class="media">
-            <div class="media-left">
-                <figure class="image is-32x32">
-                    <img src="https://bulma.io/assets/images/placeholders/64x64.png">
-                </figure>
+            <div class="media-right">
+              <% unless current_user.followed_users.include?(user) %>
+                <%= button_to 'Follow', follow_user_path(user), method: :post, class: "button is-primary is-small" %>
+              <% end %>
             </div>
-            <div class="media-content">
-                <div class="content">
-                    <p>
-                        <strong>John Smith</strong>
-                        <small>@johnsmith</small>
-                    </p>
-                </div>
-        </article>
-    </div>
-    </nav>
+          </article>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="panel-block">
+        <p>No users available to follow.</p>
+      </div>
+    <% end %>
+
+      <% if flash[:notice] %>
+        <div id="notification" class="notification is-primary global-notification">
+          <p class="notice"><%= notice %></p>
+        </div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div id="notification" class="notification is-danger global-notification">
+          <p class="alert"><%= alert %></p>
+        </div>
+      <% end %>
+  </nav>
 </div>
+

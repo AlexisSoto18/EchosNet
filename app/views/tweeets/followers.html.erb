@@ -1,0 +1,27 @@
+<div class="section">
+  <div class="container">
+    <h2 class="title">Seguidores</h2>
+    <% @followers.each do |user| %>
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <%= gravatar_image_tag(user.email, size: 64, alt: user.name) %>
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong><%= user.name %></strong><br />
+              <small>@<%= user.username %></small>
+            </p>
+          </div>
+          <% unless current_user.followed_users.include?(user) %>
+            <%= button_to 'Follow', follow_user_path(user), method: :post, class: "button is-primary is-small" %>
+          <% else %>
+            <%= button_to 'Unfollow', unfollow_user_path(user), method: :delete, class: "button is-danger is-small" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
