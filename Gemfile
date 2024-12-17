@@ -41,11 +41,8 @@ gem "devise", "~> 4.9", ">= 4.9.4"
 gem "rails-erd"
 
 # Mis gemas
-gem "prawn"
-
-
-
-
+gem "prawn-table", "~> 0.2.2"
+gem "prawn", "~> 2.2", ">= 2.2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

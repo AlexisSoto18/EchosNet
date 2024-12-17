@@ -11,8 +11,8 @@ class TweeetsController < ApplicationController
       followed_user_ids = current_user.followed_users.pluck(:id)
 
       # Obtener los tweets de los usuarios que sigue el usuario actual, incluyendo los suyos
-
-      @tweeets = Tweeet.left_joins(:retweets).where(retweets: { user_id: followed_user_ids + [ current_user.id ] }).or(Tweeet.where(user_id: followed_user_ids + [ current_user.id ])).distinct.order(created_at: :desc)
+      user_ids = followed_user_ids + [ current_user.id ]
+      @tweeets = Tweeet.left_joins(:retweets).where(retweets: { user_id: user_ids }).or(Tweeet.where(user_id: user_ids)).distinct.order(created_at: :desc)
 
       # Obtener una lista de usuarios sugeridos para seguir
       @users_to_follow = User.where.not(id: followed_user_ids + [ current_user.id ]).limit(5)
@@ -52,7 +52,7 @@ class TweeetsController < ApplicationController
 
     respond_to do |format|
       if @tweeet.save
-        format.html { redirect_to root_path, notice: "Tweeet was successfully created." }
+        format.html { redirect_to root_path, notice: "Echo was successfully created." }
         format.json { render :show, status: :created, location: @tweeet }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,7 +65,7 @@ class TweeetsController < ApplicationController
   def update
     respond_to do |format|
       if @tweeet.update(tweeet_params)
-        format.html { redirect_to @tweeet, notice: "Tweeet was successfully updated." }
+        format.html { redirect_to root_path @tweeet, notice: "Echo was successfully updated." }
         format.json { render :show, status: :ok, location: @tweeet }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,7 +79,7 @@ class TweeetsController < ApplicationController
     @tweeet.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tweeets_path, status: :see_other, notice: "Tweeet was successfully destroyed." }
+      format.html { redirect_to tweeets_path, status: :see_other, notice: "Echo was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -9,9 +9,9 @@ class RetweetsController < ApplicationController
     @retweet = Retweet.new(user: current_user, tweeet: original_tweeet)
 
     if @retweet.save
-      redirect_to root_path, notice: "Retweet realizado correctamente"
+      redirect_to root_path, notice: "Retecho realizado correctamente"
     else
-      redirect_to root_path, alert: "Hubo un error al hacer el retweet"
+      redirect_to root_path, alert: "Hubo un error al hacer el retecho"
     end
   end
 end

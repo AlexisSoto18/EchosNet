@@ -34,20 +34,19 @@
               </figure>
             <% end %>
           </div>
-          
-
+        
           <% if user_signed_in? %>
             <nav class="level">
               <div class="level-left is-mobile">
-                <%= link_to tweeet, class: "level-item" do %>
-                  <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                <% if current_user == tweeet.user %>
+                  <%= link_to edit_tweeet_path(tweeet), class: "level-item" do %>
+                    <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                  <% end %>
+                  <%= link_to tweeet, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this Echo?" }, class: "level-item" do %>
+                    <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                  <% end %>
                 <% end %>
-                <%= link_to edit_tweeet_path(tweeet), class: "level-item" do %>
-                  <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                <% end %>
-                <%= link_to tweeet, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this tweeet?" }, class: "level-item" do %>
-                  <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                <% end %>
+
                 <!-- Botón de Retweet -->
                 <div class="media-right">
                   <% unless current_user.retweets.exists?(tweeet_id: tweeet.id) %>

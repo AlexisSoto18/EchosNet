@@ -24,9 +24,11 @@
   </div>
 
   <!-- Botón para enviar el tweet -->
-  <div class="field">
+  <div class="field is-grouped">
     <%= f.button :submit, "Crear Eco", class: "button is-info" %>
+    <%= link_to 'Cancel', tweeets_path, class: "button is-dark" %>
   </div>
+  
 <% end %>
 
 
